@@ -3,8 +3,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import AuthLayout from "../layout/auth.layout";
 import MainLayout from "../layout/main.layout";
-import { RouterPaths } from "../utils/constants";
 
+import { RouterPaths } from "../utils/constants";
 import { privateRoutes, publicRoutes } from "./routes";
 
 const RouterView = () => {
