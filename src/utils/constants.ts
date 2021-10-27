@@ -1,5 +1,5 @@
 export enum RouterPaths {
-  LOGIN = "/login",
-  REGISTRATION = "/registration",
-  MAIN = "/",
+  LOGIN = '/login',
+  REGISTRATION = '/registration',
+  MAIN = '/',
 }

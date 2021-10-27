@@ -1,11 +1,11 @@
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
-import AuthLayout from "../layout/auth.layout";
-import MainLayout from "../layout/main.layout";
+import AuthLayout from '../layout/auth.layout';
+import MainLayout from '../layout/main.layout';
 
-import { RouterPaths } from "../utils/constants";
-import { privateRoutes, publicRoutes } from "./routes";
+import { RouterPaths } from '../utils/constants';
+import { privateRoutes, publicRoutes } from './routes';
 
 const RouterView = () => {
   const isAuthorized = false;
@@ -17,7 +17,7 @@ const RouterView = () => {
           {privateRoutes.map((item) => (
             <Route
               {...item}
-              key={Array.isArray(item.path) ? item.path.join("") : item.path}
+              key={Array.isArray(item.path) ? item.path.join('') : item.path}
               exact
             />
           ))}
@@ -33,7 +33,7 @@ const RouterView = () => {
         {publicRoutes.map((item) => (
           <Route
             {...item}
-            key={Array.isArray(item.path) ? item.path.join("") : item.path}
+            key={Array.isArray(item.path) ? item.path.join('') : item.path}
             exact
           />
         ))}
