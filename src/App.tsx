@@ -1,12 +1,20 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router';
+
+import { createTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { history } from './shared/history';
 import RouterView from './router-view';
+
+const theme = createTheme({});
 
 function App() {
   return (
-    <BrowserRouter>
-      <RouterView />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router history={history}>
+        <RouterView />
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -4,7 +4,7 @@ import LoginPage from '../pages/login';
 import MainPage from '../pages/main';
 import RegistrationPage from '../pages/registration';
 
-import { RouterPaths } from '../utils/constants';
+import { RouterPaths } from '../shared/constants';
 
 interface Route extends RouteProps {
   path: RouterPaths | RouterPaths[];
