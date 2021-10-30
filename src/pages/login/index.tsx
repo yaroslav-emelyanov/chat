@@ -2,10 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Paper, TextField, Typography, Link, Button } from '@material-ui/core';
-import { RouterPaths } from '../../shared/constants';
-import { history } from '../../shared/history';
 import { useStyles } from './styles';
 import { loginFx, IForm } from './model';
+
+import { history } from '@shared/history';
+import { RouterPaths } from '@shared/constants';
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm<IForm>();
