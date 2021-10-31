@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { auth } from '@shared/firebase';
+import { RouterPaths } from '@shared/constants';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { useIsAuthorized, useIsAuthProcess, setUser } from '@entities/user';
 
 import AuthLayout from '../layout/auth.layout';
 import MainLayout from '../layout/main.layout';
 
-import { RouterPaths } from '../shared/constants';
 import { privateRoutes, publicRoutes } from './routes';
 
 const RouterView = () => {
-  const isAuthorized = false;
+  const isAuthProcess = useIsAuthProcess();
+  const isAuthorized = useIsAuthorized();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(setUser);
+
+    return unsubscribe;
+  }, []);
+
+  if (isAuthProcess) {
+    return <div>Loading...</div>;
+  }
 
   if (isAuthorized) {
     return (

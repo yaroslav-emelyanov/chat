@@ -43,8 +43,8 @@ const RegistrationPage = () => {
           {...register('password', {
             required: { value: true, message: 'Password is required' },
             minLength: {
-              value: 8,
-              message: 'Password must be 8 characters long',
+              value: 6,
+              message: 'The password must consist of more than 6 characters',
             },
           })}
           label="password"
