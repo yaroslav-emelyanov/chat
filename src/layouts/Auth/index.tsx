@@ -1,15 +1,6 @@
 import React from 'react';
-import { makeStyles, Paper } from '@material-ui/core';
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    borderRadius: 0,
-  },
-});
+import { Paper } from '@material-ui/core';
+import { useStyles } from './styles';
 
 const AuthLayout: React.FC = ({ children }) => {
   const classes = useStyles();
