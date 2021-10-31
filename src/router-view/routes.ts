@@ -1,8 +1,8 @@
 import { RouteProps } from 'react-router-dom';
 
-import LoginPage from '../pages/login';
-import MainPage from '../pages/main';
-import RegistrationPage from '../pages/registration';
+import LoginPage from '../pages/Login';
+import MainPage from '../pages/Main';
+import RegistrationPage from '../pages/Registration';
 
 import { RouterPaths } from '../shared/constants';
 

@@ -4,8 +4,8 @@ import { RouterPaths } from '@shared/constants';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useIsAuthorized, useIsAuthProcess, setUser } from '@entities/user';
 
-import AuthLayout from '../layout/auth.layout';
-import MainLayout from '../layout/main.layout';
+import AuthLayout from '../layouts/Auth';
+import MainLayout from '../layouts/Main';
 
 import { privateRoutes, publicRoutes } from './routes';
 
