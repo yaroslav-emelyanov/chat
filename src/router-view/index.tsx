@@ -3,6 +3,7 @@ import { auth } from '@shared/firebase';
 import { RouterPaths } from '@shared/constants';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useIsAuthorized, useIsAuthProcess, setUser } from '@entities/user';
+import { Box, CircularProgress } from '@material-ui/core';
 
 import AuthLayout from '../layouts/Auth';
 import MainLayout from '../layouts/Main';
@@ -20,7 +21,16 @@ const RouterView = () => {
   }, []);
 
   if (isAuthProcess) {
-    return <div>Loading...</div>;
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height="100%"
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (isAuthorized) {
