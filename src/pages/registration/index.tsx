@@ -1,15 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { history } from '@shared/history';
-import { RouterPaths } from '@shared/constants';
+import { EMAIL_REGEX, RouterPaths } from '@shared/constants';
 
 import { Button, Paper, TextField, Typography, Link } from '@material-ui/core';
 import { useStyles } from './styles';
 
-import { registerFx, IForm } from './model';
+import { IForm, registerFx } from './model';
 
 const RegistrationPage = () => {
-  const { register, handleSubmit } = useForm<IForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>();
   const classes = useStyles();
 
   return (
@@ -22,15 +26,32 @@ const RegistrationPage = () => {
       >
         <Typography variant="h4">Registration</Typography>
         <TextField
-          {...register('email')}
+          {...register('email', {
+            required: { value: true, message: 'Email is required' },
+            pattern: {
+              value: EMAIL_REGEX,
+              message: 'Please enter a valid email address',
+            },
+          })}
           label="email"
           variant="outlined"
+          error={!!errors?.email}
+          helperText={errors?.email?.message || ' '}
           fullWidth
         />
         <TextField
-          {...register('password')}
+          {...register('password', {
+            required: { value: true, message: 'Password is required' },
+            minLength: {
+              value: 8,
+              message: 'Password must be 8 characters long',
+            },
+          })}
           label="password"
+          type="password"
           variant="outlined"
+          error={!!errors?.password}
+          helperText={errors?.password?.message || ' '}
           fullWidth
         />
         <Button size="large" color="primary" variant="contained" type="submit">

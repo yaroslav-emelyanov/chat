@@ -1,8 +1,10 @@
 import React from 'react';
 import { Router } from 'react-router';
+import { history } from '@shared/history';
 
 import { createTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
-import { history } from './shared/history';
+import Notification from '@components/Notification';
+import ErrorBoundary from '@components/ErrorBoundary';
 import RouterView from './router-view';
 
 const theme = createTheme({});
@@ -12,7 +14,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router history={history}>
-        <RouterView />
+        <Notification />
+        <ErrorBoundary message="Application doesn't work">
+          <RouterView />
+        </ErrorBoundary>
       </Router>
     </ThemeProvider>
   );
