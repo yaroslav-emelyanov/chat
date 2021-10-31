@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Box, Typography } from '@material-ui/core';
+import ErrorIcon from '@material-ui/icons/Error';
+
 interface IErrorBoundaryProps {
   message: string;
 }
@@ -23,7 +26,23 @@ export default class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      return <h1>{this.props.message}</h1>;
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="100%"
+        >
+          <ErrorIcon
+            style={{ marginRight: 16 }}
+            fontSize="large"
+            color="disabled"
+          />
+          <Typography color="textSecondary" variant="h5">
+            {this.props.message}
+          </Typography>
+        </Box>
+      );
     }
 
     return this.props.children;
