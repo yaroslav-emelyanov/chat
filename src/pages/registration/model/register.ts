@@ -8,8 +8,7 @@ import { setUser } from '@entities/user';
 import { IForm } from './types';
 
 export const registerFx = createEffect<IForm, UserCredential, FirebaseError>(
-  async ({ email, password }) =>
-    createUserWithEmailAndPassword(auth, email, password)
+  ({ email, password }) => createUserWithEmailAndPassword(auth, email, password)
 );
 
 registerFx.doneData.watch(({ user }) => setUser(user));

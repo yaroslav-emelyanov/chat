@@ -1,14 +1,16 @@
 import { createEffect } from 'effector';
+import { signInWithEmailAndPassword, UserCredential } from '@firebase/auth';
+import { FirebaseError } from '@firebase/util';
+import { handleError } from '@shared/utils';
+import { setUser } from '@entities/user';
+import { auth } from '@shared/firebase';
 
-import { history } from '../../../shared/history';
-import { RouterPaths } from '../../../shared/constants';
 import { IForm } from './types';
 
-export const loginFx = createEffect<IForm, any>((data) => {
-  // eslint-disable-next-line no-console
-  console.log(data);
-});
+export const loginFx = createEffect<IForm, UserCredential, FirebaseError>(
+  ({ email, password }) => signInWithEmailAndPassword(auth, email, password)
+);
 
-loginFx.doneData.watch(() => {
-  history.push(RouterPaths.MAIN);
-});
+loginFx.doneData.watch(({ user }) => setUser(user));
+
+handleError(loginFx.failData);

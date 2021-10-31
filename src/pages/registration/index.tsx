@@ -1,9 +1,16 @@
 import React from 'react';
+import { useStore } from 'effector-react';
 import { useForm } from 'react-hook-form';
 import { history } from '@shared/history';
-import { EMAIL_REGEX, RouterPaths } from '@shared/constants';
 
-import { Button, Paper, TextField, Typography, Link } from '@material-ui/core';
+import {
+  EMAIL_REGEX,
+  PASSWORD_MIN_LENGTH,
+  RouterPaths,
+} from '@shared/constants';
+
+import { Paper, TextField, Typography, Link } from '@material-ui/core';
+import ButtonWithLoading from '@components/ButtonWithLoading';
 import { useStyles } from './styles';
 
 import { IForm, registerFx } from './model';
@@ -15,6 +22,7 @@ const RegistrationPage = () => {
     formState: { errors },
   } = useForm<IForm>();
   const classes = useStyles();
+  const isLoading = useStore(registerFx.pending);
 
   return (
     <div className={classes.paperWrapper}>
@@ -43,8 +51,10 @@ const RegistrationPage = () => {
           {...register('password', {
             required: { value: true, message: 'Password is required' },
             minLength: {
-              value: 6,
-              message: 'The password must consist of more than 6 characters',
+              value: PASSWORD_MIN_LENGTH,
+              message: `The password must consist of more than ${
+                PASSWORD_MIN_LENGTH - 1
+              } characters`,
             },
           })}
           label="password"
@@ -54,9 +64,15 @@ const RegistrationPage = () => {
           helperText={errors?.password?.message || ' '}
           fullWidth
         />
-        <Button size="large" color="primary" variant="contained" type="submit">
+        <ButtonWithLoading
+          isLoading={isLoading}
+          size="large"
+          color="primary"
+          variant="contained"
+          type="submit"
+        >
           submit
-        </Button>
+        </ButtonWithLoading>
         <Typography variant="caption" component="div" align="right">
           Already have an account?{' '}
           <Link
