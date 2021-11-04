@@ -14,27 +14,7 @@ const Content = () => {
   return (
     <div className={classes.content}>
       <List>
-        {[
-          'Inbox',
-          'Starred',
-          'Send email',
-          'Drafts',
-          'Inbox',
-          'Starred',
-          'Send email',
-          'Drafts',
-          'Inbox',
-          'Starred',
-          'Send email',
-          'Drafts',
-          'Starred',
-          'Send email',
-          'Drafts',
-          'Inbox',
-          'Starred',
-          'Send email',
-          'Drafts',
-        ].map((text) => (
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text) => (
           <ListItem button key={text}>
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" />

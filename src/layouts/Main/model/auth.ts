@@ -1,8 +1,7 @@
-import { signOut } from '@firebase/auth';
-import { auth } from '@shared/firebase';
+import { authApi } from '@shared/api';
 import { handleError } from '@shared/utils';
 import { createEffect } from 'effector';
 
-export const logoutFx = createEffect(() => signOut(auth));
+export const logoutFx = createEffect(() => authApi.logout());
 
 handleError(logoutFx.failData);

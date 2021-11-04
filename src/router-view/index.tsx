@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { auth } from '@shared/firebase';
 import { RouterPaths } from '@shared/constants';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useIsAuthorized, useIsAuthProcess, setUser } from '@entities/user';
 import { Box, CircularProgress } from '@material-ui/core';
+import { authApi } from '@shared/api';
 
 import AuthLayout from '../layouts/Auth';
 import MainLayout from '../layouts/Main';
@@ -15,7 +15,7 @@ const RouterView = () => {
   const isAuthorized = useIsAuthorized();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(setUser);
+    const unsubscribe = authApi.getUser(setUser);
 
     return unsubscribe;
   }, []);

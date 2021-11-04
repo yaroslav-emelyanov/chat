@@ -34,6 +34,16 @@ const RegistrationPage = () => {
       >
         <Typography variant="h4">Registration</Typography>
         <TextField
+          {...register('name', {
+            required: { value: true, message: 'Name is required' },
+          })}
+          label="name"
+          variant="outlined"
+          error={!!errors?.name}
+          helperText={errors?.name?.message || ' '}
+          fullWidth
+        />
+        <TextField
           {...register('email', {
             required: { value: true, message: 'Email is required' },
             pattern: {
