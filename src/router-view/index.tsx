@@ -35,18 +35,21 @@ const RouterView = () => {
 
   if (isAuthorized) {
     return (
-      <MainLayout>
-        <Switch>
-          {privateRoutes.map((item) => (
-            <Route
-              {...item}
-              key={Array.isArray(item.path) ? item.path.join('') : item.path}
-              exact
-            />
-          ))}
-          <Redirect to={RouterPaths.MAIN} />
-        </Switch>
-      </MainLayout>
+      <Switch>
+        {privateRoutes.map(({ component: Component, ...item }) => (
+          <Route
+            {...item}
+            component={() => (
+              <MainLayout>
+                <Component />
+              </MainLayout>
+            )}
+            key={Array.isArray(item.path) ? item.path.join('') : item.path}
+            exact
+          />
+        ))}
+        <Redirect to={RouterPaths.MAIN} />
+      </Switch>
     );
   }
 

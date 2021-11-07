@@ -2,6 +2,7 @@ export enum RouterPaths {
   LOGIN = '/login',
   REGISTRATION = '/registration',
   MAIN = '/',
+  CHAT = '/chat/:chat_uid',
 }
 
 export const FIREBASE_ERROR_MESSAGES: Record<string, string> = {

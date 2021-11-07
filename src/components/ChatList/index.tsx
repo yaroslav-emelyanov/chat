@@ -7,25 +7,30 @@ import {
   ListItemAvatar,
   ListItemText,
 } from '@material-ui/core';
+import { IChat } from '@entities/chat';
 
 interface IChatListProps {
-  list: any;
-  onChange: (item: any) => void;
+  value: string;
+  list: IChat[];
+  onChange: (item: IChat) => void;
 }
 
-const ChatList: React.FC<IChatListProps> = () => {
-  return (
-    <List>
-      {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text) => (
-        <ListItem button key={text}>
-          <ListItemAvatar>
-            <Avatar alt="Remy Sharp" />
-          </ListItemAvatar>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-  );
-};
+const ChatList: React.FC<IChatListProps> = ({ value, list, onChange }) => (
+  <List>
+    {list.map((item) => (
+      <ListItem
+        onClick={() => onChange(item)}
+        selected={value === item.uid}
+        key={item.uid}
+        button
+      >
+        <ListItemAvatar>
+          <Avatar src="/" alt={item.name} />
+        </ListItemAvatar>
+        <ListItemText primary={item.name} />
+      </ListItem>
+    ))}
+  </List>
+);
 
 export default ChatList;
