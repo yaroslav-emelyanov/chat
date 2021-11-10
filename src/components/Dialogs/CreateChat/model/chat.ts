@@ -8,15 +8,13 @@ import { IForm } from './types';
 
 export const submitForm = createEvent<IForm>();
 
-const createChatFx = createEffect<IChatData, void, FirebaseError>(
-  async (data) => {
-    const chatRef = chatApi.createChat(data);
-    chatApi.createRelationChatUsers({
-      chat_uid: chatRef.key || '',
-      user_uid: data.creator_uid,
-    });
-  }
-);
+const createChatFx = createEffect<IChatData, void, FirebaseError>((data) => {
+  const chatRef = chatApi.createChat(data);
+  chatApi.createRelationChatUsers({
+    chat_uid: chatRef.key || '',
+    user_uid: data.creator_uid,
+  });
+});
 
 sample({
   clock: submitForm,

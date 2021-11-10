@@ -10,4 +10,10 @@ export const useStyles = makeStyles((theme) => ({
   form: {
     marginTop: theme.spacing(3),
   },
+  listEmpty: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }));

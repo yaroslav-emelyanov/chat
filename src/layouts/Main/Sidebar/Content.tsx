@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router';
+
 import ChatList from '@components/ChatList';
 
 import { chatApi } from '@shared/api';
 import { useUser } from '@entities/user';
+import { history } from '@shared/history';
 import { pushChat, useChats } from '@entities/chat';
 
 import { useStyles } from './styles';
-import { history } from '@shared/history';
-import { useParams } from 'react-router';
 
 const Content = () => {
   const { chat_uid } = useParams<{ chat_uid: string }>();
@@ -15,11 +16,10 @@ const Content = () => {
   const chats = useChats();
   const user = useUser();
 
-  useEffect(() => {
-    const unsubscribe = chatApi.getChats(user?.uid || '', pushChat);
-
-    return unsubscribe;
-  }, [user]);
+  useEffect(
+    () => chatApi.subsribeOnChatAdded(user?.uid || '', pushChat),
+    [user]
+  );
 
   return (
     <div className={classes.content}>

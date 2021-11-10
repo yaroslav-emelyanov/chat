@@ -16,5 +16,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   currentUser: {
     alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
   },
 }));

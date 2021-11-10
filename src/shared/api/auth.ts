@@ -6,5 +6,5 @@ export const login = (email: string, password: string) =>
 
 export const logout = () => signOut(auth);
 
-export const getUser = (setUser: (user: User | null) => void) =>
+export const subscribeOnUserChaged = (setUser: (user: User | null) => void) =>
   auth.onAuthStateChanged(setUser);

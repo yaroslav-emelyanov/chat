@@ -10,11 +10,10 @@ const MainLayout: React.FC = ({ children }) => {
   const classes = useStyles();
   const user = useUser();
 
-  useEffect(() => {
-    const unsubscribe = userApi.getUserInfo(user?.uid || '', setUserInfo);
-
-    return unsubscribe;
-  }, [user]);
+  useEffect(
+    () => userApi.subscribeOnUserInfo(user?.uid || '', setUserInfo),
+    [user]
+  );
 
   return (
     <div className={classes.root}>

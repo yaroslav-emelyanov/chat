@@ -16,7 +16,10 @@ export const createChat = (data: IChatData) => push(ref(db, `chats`), data);
 export const createRelationChatUsers = (data: IChatUserData) =>
   push(ref(db, `chat_users`), data);
 
-export const getChats = (user_uid: string, setChat: (chat: IChat) => void) => {
+export const subsribeOnChatAdded = (
+  user_uid: string,
+  setChat: (chat: IChat) => void
+) => {
   const chatUsersRef = query(
     ref(db, 'chat_users'),
     orderByChild('user_uid'),

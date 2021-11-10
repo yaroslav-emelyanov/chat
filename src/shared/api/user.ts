@@ -5,7 +5,7 @@ import { set, ref, onValue } from 'firebase/database';
 export const createUser = (uid: string, data: IUserInfo) =>
   set(ref(db, `users/${uid}`), data);
 
-export const getUserInfo = (
+export const subscribeOnUserInfo = (
   uid: string,
   setUserInfo: (userInfo: IUserInfo) => void
 ) =>

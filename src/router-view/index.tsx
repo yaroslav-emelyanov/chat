@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { RouterPaths } from '@shared/constants';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { useIsAuthorized, useIsAuthProcess, setUser } from '@entities/user';
+
 import { Box, CircularProgress } from '@material-ui/core';
+
+import { useIsAuthorized, useIsAuthProcess, setUser } from '@entities/user';
+import { RouterPaths } from '@shared/constants';
 import { authApi } from '@shared/api';
 
 import AuthLayout from '../layouts/Auth';
@@ -14,11 +16,7 @@ const RouterView = () => {
   const isAuthProcess = useIsAuthProcess();
   const isAuthorized = useIsAuthorized();
 
-  useEffect(() => {
-    const unsubscribe = authApi.getUser(setUser);
-
-    return unsubscribe;
-  }, []);
+  useEffect(() => authApi.subscribeOnUserChaged(setUser), []);
 
   if (isAuthProcess) {
     return (
