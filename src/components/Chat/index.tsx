@@ -12,12 +12,13 @@ interface IChatProps {
 
 const Chat: React.FC<IChatProps> = ({ messages, currentUserUid }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.chat}>
       {messages.map((message) => (
         <Message
           message={message}
-          isCurrentUser={currentUserUid === message.creator_uid}
+          isCurrentUser={currentUserUid === message.creator.uid}
           key={message.uid}
         />
       ))}

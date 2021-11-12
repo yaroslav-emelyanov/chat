@@ -12,6 +12,7 @@ export const $user = createStore<User | null>(null).on(
 export const setUserInfo = createEvent<IUserInfo>();
 
 export const $userInfo = createStore<IUserInfo>({
+  uid: '',
   name: '',
   email: '',
 }).on(setUserInfo, (_, userInfo) => userInfo);

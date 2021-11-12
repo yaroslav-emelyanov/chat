@@ -3,16 +3,18 @@ import {
   ref,
   push,
   query,
-  orderByChild,
   equalTo,
+  orderByChild,
   onChildAdded,
   onChildChanged,
   onChildRemoved,
+  serverTimestamp,
 } from 'firebase/database';
 import { IMessage, IMessageData } from '@entities/message';
+import { userApi } from '.';
 
 export const createMessage = (data: IMessageData) =>
-  push(ref(db, `messages`), data);
+  push(ref(db, `messages`), { ...data, created: serverTimestamp() });
 
 export const subscribeOnMessages = (
   chat_uid: string,
@@ -28,15 +30,25 @@ export const subscribeOnMessages = (
   );
 
   const addUnsubsribe = onChildAdded(messagesRef, (snapshot) => {
-    const message = snapshot.val();
+    const { creator_uid = '', ...message } = {
+      uid: snapshot.key,
+      ...snapshot.val(),
+    };
 
-    callbacks.onAdd({ uid: snapshot.key, ...message });
+    userApi.getUserInfo(creator_uid, (creator) => {
+      callbacks.onAdd({ ...message, creator });
+    });
   });
 
   const changeUnsubsribe = onChildChanged(messagesRef, (snapshot) => {
-    const message = snapshot.val();
+    const { creator_uid = '', ...message } = {
+      uid: snapshot.key,
+      ...snapshot.val(),
+    };
 
-    callbacks.onChange({ uid: snapshot.key, ...message });
+    userApi.getUserInfo(creator_uid, (creator) => {
+      callbacks.onChange({ ...message, creator });
+    });
   });
 
   const removeUnsubsribe = onChildRemoved(messagesRef, (snapshot) => {

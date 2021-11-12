@@ -1,5 +1,5 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
-import { IChat, pushChat } from '@entities/chat';
+import { IChat, addChat } from '@entities/chat';
 import { FirebaseError } from '@firebase/util';
 import { messageApi } from '@shared/api';
 
@@ -20,7 +20,7 @@ const subscribeOnMessagesFx = createEffect<IChat, void, FirebaseError>(
 );
 
 sample({
-  clock: pushChat,
+  clock: addChat,
   target: subscribeOnMessagesFx,
 });
 

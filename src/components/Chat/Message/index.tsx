@@ -20,11 +20,11 @@ const Message: React.FC<IMessageProps> = ({ message, isCurrentUser }) => {
       })}
     >
       {!isCurrentUser && (
-        <Avatar alt={`Avatar n°1`} src={`/static/images/avatar/.jpg`} />
+        <Avatar alt={message.creator.name} src={`/static/images/avatar/.jpg`} />
       )}
       <div className={classes.bubble}>
         <div>{message.text}</div>
-        <div>time</div>
+        <div>{new Date(message.created).toDateString()}</div>
       </div>
     </div>
   );

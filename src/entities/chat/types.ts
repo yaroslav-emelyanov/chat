@@ -5,6 +5,7 @@ export interface IChatData {
 
 export interface IChat extends IChatData {
   uid: string;
+  users: Record<string, boolean>;
 }
 
 export interface IChatUserData {

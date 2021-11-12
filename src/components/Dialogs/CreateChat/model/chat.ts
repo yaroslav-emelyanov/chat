@@ -9,11 +9,7 @@ import { IForm } from './types';
 export const submitForm = createEvent<IForm>();
 
 const createChatFx = createEffect<IChatData, void, FirebaseError>((data) => {
-  const chatRef = chatApi.createChat(data);
-  chatApi.createRelationChatUsers({
-    chat_uid: chatRef.key || '',
-    user_uid: data.creator_uid,
-  });
+  chatApi.createChat(data);
 });
 
 sample({
@@ -22,6 +18,9 @@ sample({
   fn: (user, form) => ({
     name: form.name,
     creator_uid: user?.uid || '',
+    users: {
+      [user?.uid || '']: true,
+    },
   }),
   target: createChatFx,
 });

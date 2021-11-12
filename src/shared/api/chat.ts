@@ -1,38 +1,50 @@
-import { IChat, IChatData, IChatUserData } from '@entities/chat';
 import { db } from '@shared/firebase';
+import { IChat, IChatData } from '@entities/chat';
 import {
   ref,
   push,
-  query,
-  equalTo,
   onChildAdded,
-  orderByChild,
-  child,
-  onValue,
+  onChildRemoved,
+  onChildChanged,
 } from 'firebase/database';
 
 export const createChat = (data: IChatData) => push(ref(db, `chats`), data);
 
-export const createRelationChatUsers = (data: IChatUserData) =>
-  push(ref(db, `chat_users`), data);
-
-export const subsribeOnChatAdded = (
+export const subsribeOnChats = (
   user_uid: string,
-  setChat: (chat: IChat) => void
+  calbacks: Record<'onRemove' | 'onChange' | 'onAdd', (chat: IChat) => void>
 ) => {
-  const chatUsersRef = query(
-    ref(db, 'chat_users'),
-    orderByChild('user_uid'),
-    equalTo(user_uid)
-  );
+  const chatUsersRef = ref(db, 'chats');
 
-  return onChildAdded(chatUsersRef, (snapshot) => {
-    const chat_uid = snapshot.child('chat_uid').val();
+  const addUnsubscribe = onChildAdded(chatUsersRef, (snapshot) => {
+    const chat: IChat = snapshot.val();
 
-    const chatsRef = child(ref(db, 'chats'), chat_uid);
-
-    onValue(chatsRef, (snapshot) => {
-      setChat({ uid: snapshot.key, ...snapshot.val() });
-    });
+    if (chat.users[user_uid]) {
+      calbacks.onAdd({ uid: snapshot.key, ...snapshot.val() });
+    }
   });
+
+  const changeUnsubscribe = onChildChanged(chatUsersRef, (snapshot) => {
+    const chat: IChat = snapshot.val();
+
+    if (chat.users[user_uid]) {
+      calbacks.onChange({ uid: snapshot.key, ...snapshot.val() });
+    } else {
+      calbacks.onRemove({ uid: snapshot.key, ...snapshot.val() });
+    }
+  });
+
+  const removeUnsubscribe = onChildRemoved(chatUsersRef, (snapshot) => {
+    const chat: IChat = snapshot.val();
+
+    if (chat.users[user_uid]) {
+      calbacks.onRemove({ uid: snapshot.key, ...snapshot.val() });
+    }
+  });
+
+  return {
+    addUnsubscribe,
+    changeUnsubscribe,
+    removeUnsubscribe,
+  };
 };
