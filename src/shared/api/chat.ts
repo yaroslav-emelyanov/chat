@@ -42,9 +42,5 @@ export const subsribeOnChats = (
     }
   });
 
-  return {
-    addUnsubscribe,
-    changeUnsubscribe,
-    removeUnsubscribe,
-  };
+  return [addUnsubscribe, changeUnsubscribe, removeUnsubscribe];
 };
